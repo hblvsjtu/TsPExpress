@@ -1,0 +1,147 @@
+{
+    "name": "ts_p_express",
+    "version": "0.0.1",
+    "description": "ts Promise API Express",
+    "keywords": [],
+    "main": "dist/tsPExpress.umd.js",
+    "module": "dist/tsPExpress.es5.js",
+    "typings": "dist/types/tsPExpress.d.ts",
+    "files": [
+        "dist"
+    ],
+    "author": "hblvsjtu <hblvsjtu@163.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hblvsjtu/TsPExpress.git"
+    },
+    "license": "MIT",
+    "engines": {
+        "node": ">=6.0.0"
+    },
+    "scripts": {
+        "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+        "server": "node ./dist/tsPExpress.es5.js",
+        "build-server": "npm run build && npm run server",
+        "start": "nodemon",
+        "pretty": "pretty-quick",
+        "genlog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+        "precommit": "lint-staged",
+        "commit": "git-cz",
+        "test": "jest --coverage",
+        "test:watch": "jest --coverage --watch",
+        "test:prod": "npm run lint && npm run test -- --no-cache",
+        "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+        "prebuild": "rimraf dist",
+        "deploy-docs": "ts-node tools/gh-pages-publish",
+        "report-coverage": "cat ./coverage/lcov.info | coveralls",
+        "semantic-release": "semantic-release",
+        "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
+        "travis-deploy-once": "travis-deploy-once"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^7.6.1",
+        "@commitlint/config-conventional": "^7.6.0",
+        "@types/jest": "^23.3.2",
+        "@types/node": "^10.11.0",
+        "body-parse": "^0.1.0",
+        "colors": "^1.3.2",
+        "commitizen": "^3.0.0",
+        "conventional-changelog-cli": "^2.0.34",
+        "coveralls": "^3.1.0",
+        "cross-env": "^5.2.1",
+        "cz-conventional-changelog": "^2.1.0",
+        "express": "^4.17.1",
+        "handlebars": "^4.5.0",
+        "husky": "^1.0.1",
+        "jest": "^23.6.0",
+        "jest-config": "^23.6.0",
+        "lint-staged": "^8.2.1",
+        "lodash.camelcase": "^4.3.0",
+        "nodemon": "^2.0.4",
+        "prettier": "^1.14.3",
+        "pretty-quick": "^2.0.1",
+        "prompt": "^1.0.0",
+        "replace-in-file": "^3.4.2",
+        "rimraf": "^2.7.1",
+        "rollup": "^0.67.0",
+        "rollup-plugin-commonjs": "^9.1.8",
+        "rollup-plugin-json": "^3.1.0",
+        "rollup-plugin-node-resolve": "^3.4.0",
+        "rollup-plugin-sourcemaps": "^0.4.2",
+        "rollup-plugin-typescript2": "^0.18.0",
+        "semantic-release": "^15.9.16",
+        "shelljs": "^0.8.4",
+        "travis-deploy-once": "^5.0.11",
+        "ts-jest": "^23.10.2",
+        "ts-loader": "^7.0.5",
+        "ts-node": "^7.0.1",
+        "tslint": "^5.11.0",
+        "tslint-config-prettier": "^1.15.0",
+        "tslint-config-standard": "^8.0.1",
+        "tslint-loader": "^3.5.4",
+        "typedoc": "^0.12.0",
+        "typescript": "^3.0.3"
+    },
+    "lint-staged": {
+        "{src,test}/**/*.ts": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog",
+            "maxHeaderWidth": 100,
+            "maxLineWidth": 100,
+            "defaultType": "",
+            "defaultScope": "",
+            "defaultSubject": "",
+            "defaultBody": "",
+            "defaultIssues": "",
+            "types": {
+                "feat": {
+                    "description": "A new feature",
+                    "title": "Features"
+                },
+                "fix": {
+                    "description": "A new fix",
+                    "title": "Features"
+                },
+                "docs": {
+                    "description": "A new docs",
+                    "title": "Features"
+                },
+                "style": {
+                    "description": "A new style",
+                    "title": "Features"
+                },
+                "refactor": {
+                    "description": "A new refactor",
+                    "title": "refactor"
+                },
+                "test": {
+                    "description": "A new test",
+                    "title": "test"
+                },
+                "revert": {
+                    "description": "A new revert",
+                    "title": "revert"
+                },
+                "config": {
+                    "description": "A new config",
+                    "title": "config"
+                },
+                "chore": {
+                    "description": "A new chore",
+                    "title": "chore"
+                }
+            }
+        }
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "jest & lint-staged & pretty-quick --staged"
+        }
+    },
+    "dependencies": {}
+}
