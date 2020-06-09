@@ -8,7 +8,7 @@
     "events": {
         "restart": "osascript -e 'display notification \"App restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
     },
-    "watch": ["dist/tsPExpress.es5.js"],
+    "watch": ["./test/dist/test.es5.js"],
     "env": {
         "NODE_ENV": "development"
     },

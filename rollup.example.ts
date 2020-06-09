@@ -6,19 +6,17 @@ import json from 'rollup-plugin-json';
 
 const pkg = require('./package.json');
 
-const libraryName = 'index';
-
 export default {
-    input: `src/${libraryName}.ts`,
+    input: `test/index.ts`,
     output: [
         {
-            file: pkg.main,
-            name: 'PExpress',
+            file: 'test/dist/test.umd.js',
+            name: 'test',
             format: 'umd',
             sourcemap: true
         },
         {
-            file: pkg.module,
+            file: 'test/dist/test.es5.js',
             format: 'es',
             sourcemap: true
         }

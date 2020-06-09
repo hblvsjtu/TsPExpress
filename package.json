@@ -1,13 +1,20 @@
 {
-    "name": "ts_p_express",
+    "name": "tspexpress",
     "version": "0.0.1",
     "description": "ts Promise API Express",
-    "keywords": [],
+    "keywords": [
+        "ts",
+        "express",
+        "promise"
+    ],
     "main": "dist/tsPExpress.umd.js",
     "module": "dist/tsPExpress.es5.js",
     "typings": "dist/types/tsPExpress.d.ts",
     "files": [
-        "dist"
+        "dist",
+        "src",
+        "README.md",
+        "CHANGELOG.md"
     ],
     "author": "hblvsjtu <hblvsjtu@163.com>",
     "repository": {
@@ -20,8 +27,10 @@
     },
     "scripts": {
         "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
-        "server": "node ./dist/tsPExpress.es5.js",
-        "build-server": "npm run build && npm run server",
+        "server": "node ./test/dist/test.es5.js",
+        "build-test": "rollup --config rollup.example.js",
+        "build-server": "npm run build-test && npm run server",
+        "build-whole": "npm run build && npm run build-test && npm run server",
         "start": "nodemon",
         "pretty": "pretty-quick",
         "genlog": "conventional-changelog -p angular -i CHANGELOG.md -s",
@@ -36,7 +45,8 @@
         "report-coverage": "cat ./coverage/lcov.info | coveralls",
         "semantic-release": "semantic-release",
         "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
-        "travis-deploy-once": "travis-deploy-once"
+        "travis-deploy-once": "travis-deploy-once",
+        "monitor": "nodemon"
     },
     "devDependencies": {
         "@commitlint/cli": "^7.6.1",
