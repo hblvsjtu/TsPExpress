@@ -28,7 +28,7 @@
     "scripts": {
         "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
         "server": "node ./test/dist/test.es5.js",
-        "build-test": "rollup --config rollup.example.js",
+        "build-test": "rollup --config rollup.example.ts",
         "build-server": "npm run build-test && npm run server",
         "build-whole": "npm run build && npm run build-test && npm run server",
         "start": "nodemon",

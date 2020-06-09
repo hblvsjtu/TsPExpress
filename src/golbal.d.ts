@@ -124,4 +124,9 @@ interface PExpress {
     head: (url: string, resolve: ResolveFn<Next>, reject?: RejectFn) => PExpress;
     options: (url: string, resolve: ResolveFn<Next>, reject?: RejectFn) => PExpress;
     delete: (url: string, resolve: ResolveFn<Next>, reject?: RejectFn) => PExpress;
+    setStaticPath: (absolutePath: string) => PExpress;
+}
+
+interface StaticPathOptions {
+    defaultFile?: string;
 }

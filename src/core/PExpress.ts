@@ -1,3 +1,6 @@
+import buildStatisFiles from '../utils/staticPath';
+const path = require('path');
+
 const methodProxy = (
     url: string,
     routeInterceptor: Interceptor<Next>,
@@ -68,5 +71,41 @@ export default class PExpress {
     }
     delete(url: string, resolve: ResolveFn<Next>, reject?: RejectFn): PExpress {
         return methodProxy(url, {resolve, reject}, this, 'DELETE');
+    }
+    setStaticPath(absolutePath: string, options?: StaticPathOptions): boolean {
+        const fileInterceptor: Interceptor<Next> = {
+            resolve: (next: Next): Next | Promise<Next> => {
+                const {req, res} = next;
+                const [relativePath, queryObject] = req.url.split('?');
+                const isFile = relativePath.includes('.');
+                if (req.url === '/') {
+                    if (options) {
+                        const defaultFile = options.defaultFile;
+                        defaultFile &&
+                            buildStatisFiles({
+                                res,
+                                path: path.join(absolutePath, defaultFile),
+                                contentType: 'text/' + defaultFile.split('.')[1]
+                            });
+                    }
+                } else if (isFile) {
+                    const ext = relativePath.split('.').reverse()[0];
+                    buildStatisFiles({
+                        res,
+                        path: path.join(absolutePath, relativePath),
+                        contentType: 'text/' + ext
+                    });
+                }
+                return next;
+            },
+            reject: (err?: Error): void => {
+                if (err) {
+                    console.error(err.message);
+                    throw err;
+                }
+            }
+        };
+        this.interceptorList.push(fileInterceptor);
+        return true;
     }
 }

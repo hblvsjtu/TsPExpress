@@ -19,6 +19,9 @@ router.interceptManager.use({
         return next;
     }
 });
+
+router.setStaticPath(BASE_DIR, {defaultFile: 'index.html'});
+
 router.interceptManager.use({
     resolve: (next: Next) => {
         const {req, res} = next;
@@ -73,24 +76,7 @@ router.post('/post/:path', (next: Next) => {
 });
 
 const server = http.createServer((req: any, res: any): void => {
-    const [relativePath, queryObject] = req.url.split('?');
-    const isFile = relativePath.includes('.');
-    if (req.url === '/') {
-        buildStatisFiles({
-            res,
-            path: BASE_DIR + '/' + DEFAULT_FILE,
-            contentType: 'text/' + DEFAULT_FILE.split('.')[1]
-        });
-    } else if (isFile) {
-        const ext = relativePath.split('.').reverse()[0];
-        buildStatisFiles({
-            res,
-            path: BASE_DIR + relativePath,
-            contentType: 'text/' + ext
-        });
-    } else {
-        router.execute({res, req});
-    }
+    router.execute({res, req});
 });
 
 server.listen('3001');
