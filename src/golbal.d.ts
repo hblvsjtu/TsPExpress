@@ -21,13 +21,6 @@ interface StaticFilesOptions {
     responseCode?: number;
 }
 
-interface StaticFilesOptions {
-    res: any;
-    path: string;
-    contentType?: string;
-    responseCode?: number;
-}
-
 interface FileData {
     next: string;
     message: string;
@@ -124,7 +117,9 @@ interface PExpress {
     head: (url: string, resolve: ResolveFn<Next>, reject?: RejectFn) => PExpress;
     options: (url: string, resolve: ResolveFn<Next>, reject?: RejectFn) => PExpress;
     delete: (url: string, resolve: ResolveFn<Next>, reject?: RejectFn) => PExpress;
-    setStaticPath: (absolutePath: string) => PExpress;
+    setStaticPath: (absolutePath: string, options?: StaticPathOptions) => boolean;
+    create: () => PExpress;
+    listen: (port: number, callback?: () => any) => any;
 }
 
 interface StaticPathOptions {

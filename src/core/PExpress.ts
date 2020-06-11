@@ -1,5 +1,6 @@
 import buildStatisFiles from '../utils/staticPath';
 const path = require('path');
+const http = require('http');
 
 const methodProxy = (
     url: string,
@@ -23,11 +24,12 @@ const methodProxy = (
     return content;
 };
 
-const reject = (err: Error) => {
-    console.error();
+const defaultReject = (err: Error) => {
+    console.error(err);
 };
 
 export default class PExpress {
+    httpServer: any;
     interceptorList: Array<Interceptor<any>>;
     interceptManager: InterceptManager<any>;
     constructor() {
@@ -48,7 +50,7 @@ export default class PExpress {
         while (promiseChain.length) {
             const shift = promiseChain.shift();
             if (shift && promise instanceof Promise) {
-                const {resolve, reject} = shift;
+                const {resolve, reject = defaultReject} = shift;
                 promise = promise.then(resolve, reject);
             }
         }
@@ -107,5 +109,14 @@ export default class PExpress {
         };
         this.interceptorList.push(fileInterceptor);
         return true;
+    }
+    create() {
+        this.httpServer = http.createServer((req: any, res: any) => {
+            this.execute({req, res});
+        });
+        return this;
+    }
+    listen(port: number, callback?: () => any) {
+        return this.httpServer.listen(port, callback);
     }
 }

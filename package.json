@@ -150,7 +150,8 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "jest & lint-staged & pretty-quick --staged"
+            "pre-commit": "lint-staged && pretty-quick --staged",
+            "pre-push": "jest"
         }
     },
     "dependencies": {}

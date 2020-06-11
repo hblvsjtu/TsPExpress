@@ -3,13 +3,11 @@
  * @author hblvsjtu(hblvsjtu@163.com)
  */
 
-const http = require('http');
 const queryString = require('querystring');
-import buildStatisFiles from '../src/utils/staticPath';
-import {BASE_DIR, DEFAULT_FILE} from './common';
-import PExpress from '../src/core/PExpress';
+import {BASE_DIR} from './common';
+import pexpress from '../src/index';
 
-const router: PExpress = new PExpress();
+const router: PExpress = pexpress.create();
 router.interceptManager.use({
     resolve: (next: Next) => {
         const {req, res} = next;
@@ -75,8 +73,4 @@ router.post('/post/:path', (next: Next) => {
     return next;
 });
 
-const server = http.createServer((req: any, res: any): void => {
-    router.execute({res, req});
-});
-
-server.listen('3001');
+router.listen(3001, () => console.log('server start!'));

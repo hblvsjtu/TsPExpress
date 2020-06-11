@@ -1,3 +1,5 @@
 import PExpress from './core/PExpress';
 
-export default PExpress;
+const pexpress = new PExpress();
+
+export default pexpress;
