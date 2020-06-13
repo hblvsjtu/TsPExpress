@@ -1,3 +1,21 @@
+## 0.0.2 (2020-06-13)
+
+
+### Bug Fixes
+
+* **tsconfig:** tsconfig "include" delete test file dir ([2bda43d](https://github.com/hblvsjtu/TsPExpress/commit/2bda43ddf9b3c44198a0b7eedaf1af319b4bdbc6))
+* **type file name:** type file name change ([87c578d](https://github.com/hblvsjtu/TsPExpress/commit/87c578da281da183d107ff34abd9c2d8aad718df))
+
+
+### Features
+
+* **封装class:** 封装class 外部直接调用class ([a9a09e0](https://github.com/hblvsjtu/TsPExpress/commit/a9a09e0d5db07a8cf18810805a0bb768483edb59))
+* **init:** init project ([7818ffc](https://github.com/hblvsjtu/TsPExpress/commit/7818ffc6bba9a0e8df887366a33977c71e4f5bac))
+* **RouterInterceptor:** RouterInterceptor with parameters ([f025321](https://github.com/hblvsjtu/TsPExpress/commit/f025321d4865c71adfd272e9db7fd3d7e1c98c85))
+* **staticPath:** staticPath for tspexpress ([2d933c8](https://github.com/hblvsjtu/TsPExpress/commit/2d933c88cc30de9709f75112790955c6bc54015f))
+
+
+
 ## 0.0.1 (2020-06-13)
 
 

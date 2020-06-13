@@ -3,7 +3,7 @@
  * @author hblvsjtu(hblvsjtu@163.com)
  */
 
-/// <reference path="../src/golbal.d.ts" />
+/// <reference path="../src/types/golbal.d.ts" />
 const queryString = require('querystring');
 import {BASE_DIR} from './common';
 import pexpress from '../src/index';

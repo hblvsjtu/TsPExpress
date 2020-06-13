@@ -1,6 +1,6 @@
 {
     "name": "tspexpress",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "description": "ts Promise API Express",
     "keywords": [
         "ts",
@@ -12,7 +12,7 @@
     "typings": "dist/types/tsPExpress.d.ts",
     "files": [
         "dist",
-        "src",
+        "src/types",
         "README.md",
         "CHANGELOG.md"
     ],
