@@ -20,7 +20,8 @@ const processBody = async (req: Req): Promise<Req> => {
                         req.body = queryString.parse(chunks.toString());
                         break;
                     case CONTENT_TYPE.json:
-                        req.body = JSON.parse(chunks.toString());
+                        const result = chunks.toString();
+                        req.body = result ? JSON.parse(result) : null;
                         break;
                     case CONTENT_TYPE.formData:
                         // TODO

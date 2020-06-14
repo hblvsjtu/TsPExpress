@@ -1,6 +1,6 @@
 {
     "name": "tspexpress",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "ts Promise API Express",
     "keywords": [
         "ts",
@@ -34,7 +34,7 @@
         "build-whole": "npm run build && npm run build-test",
         "start": "nodemon ./test/dist/test.es5.js",
         "pretty": "pretty-quick",
-        "genlog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md && git commit --amend --no-edit",
+        "genlog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md docs && git commit --amend --no-edit",
         "precommit": "lint-staged",
         "commit": "git-cz",
         "test": "jest --coverage",

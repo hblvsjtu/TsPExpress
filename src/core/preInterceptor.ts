@@ -4,12 +4,16 @@ import processBody from '../utils/body';
 const preInterceptor: Interceptor<Next> = {
     resolve: async (next: Next) => {
         const req: Req = next.req;
-        processQuery(req);
-        await processBody(req);
+        try {
+            processQuery(req);
+            await processBody(req);
+        } catch (err) {
+            throw err;
+        }
         return next;
     },
     reject: (err?: Error) => {
-        throw new Error('解析body出错！');
+        throw err ? err : new Error('解析body出错！');
     }
 };
 

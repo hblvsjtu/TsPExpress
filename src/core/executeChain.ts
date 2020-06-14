@@ -1,5 +1,5 @@
 const defaultReject = (err: Error) => {
-    console.error(err);
+    throw err;
 };
 
 const getExecutor: GetExecutor = function(interceptorList: Array<Interceptor<Next>>): Executor {
