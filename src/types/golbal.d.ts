@@ -21,13 +21,12 @@ interface StaticFilesOptions {
     responseCode?: number;
 }
 
-interface FileData {
-    next: string;
-    message: string;
-}
-
 interface MyHeaders {
     [name: string]: any;
+}
+
+interface MyQuery {
+    [other: string]: any;
 }
 
 interface Req {
@@ -76,7 +75,7 @@ interface Req {
     writableFinished?: boolean;
     write?: (chunk: string | Buffer, encoding?: string, callback?: Function) => any;
     [other: string]: any;
-    query?: object;
+    query?: MyQuery;
     body?: any;
 }
 

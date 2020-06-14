@@ -1,3 +1,92 @@
+## 0.0.7 (2020-06-14)
+
+
+### Bug Fixes
+
+* **delete interface FileData:** delete interface FileData ([d2d52cf](https://github.com/hblvsjtu/TsPExpress/commit/d2d52cf5cc89e5356c1cb2c8d3e193519eee21e5))
+* **query type:** query type: object -> Myquery {[other: string]: any;} ([676ef5d](https://github.com/hblvsjtu/TsPExpress/commit/676ef5d96e79799b265783375a48dd26d7332750))
+* **tsconfig:** tsconfig "include" delete test file dir ([2bda43d](https://github.com/hblvsjtu/TsPExpress/commit/2bda43ddf9b3c44198a0b7eedaf1af319b4bdbc6))
+* **type file name:** type file name change ([0836e86](https://github.com/hblvsjtu/TsPExpress/commit/0836e86e14103d8db63bef04fd68816769c00228))
+
+
+### Features
+
+* *** router:** * router: such as /* ([c6fe9b8](https://github.com/hblvsjtu/TsPExpress/commit/c6fe9b89f7a84099245525b5e7ce408b70020a0e))
+* **封装class:** 封装class 外部直接调用class ([a9a09e0](https://github.com/hblvsjtu/TsPExpress/commit/a9a09e0d5db07a8cf18810805a0bb768483edb59))
+* **add use method:** add use method instead of interceptorManage.use ([fa7d9eb](https://github.com/hblvsjtu/TsPExpress/commit/fa7d9eb2f52138b786e45cf669c256d3bd63d46d))
+* **init:** init project ([7818ffc](https://github.com/hblvsjtu/TsPExpress/commit/7818ffc6bba9a0e8df887366a33977c71e4f5bac))
+* **parse query and body:** parse query and body but not formdata type ([96c3757](https://github.com/hblvsjtu/TsPExpress/commit/96c3757bdbf018dc5701472f92a20215d5d98190))
+* **RouterInterceptor:** RouterInterceptor with parameters ([f025321](https://github.com/hblvsjtu/TsPExpress/commit/f025321d4865c71adfd272e9db7fd3d7e1c98c85))
+* **staticPath:** staticPath for tspexpress ([2d933c8](https://github.com/hblvsjtu/TsPExpress/commit/2d933c88cc30de9709f75112790955c6bc54015f))
+
+
+
+## 0.0.6 (2020-06-14)
+
+
+### Bug Fixes
+
+* **delete interface FileData:** delete interface FileData ([834e153](https://github.com/hblvsjtu/TsPExpress/commit/834e1534a1edf1bd7299145c931295dfc37bf6f8))
+* **tsconfig:** tsconfig "include" delete test file dir ([2bda43d](https://github.com/hblvsjtu/TsPExpress/commit/2bda43ddf9b3c44198a0b7eedaf1af319b4bdbc6))
+* **type file name:** type file name change ([0836e86](https://github.com/hblvsjtu/TsPExpress/commit/0836e86e14103d8db63bef04fd68816769c00228))
+
+
+### Features
+
+* *** router:** * router: such as /* ([c6fe9b8](https://github.com/hblvsjtu/TsPExpress/commit/c6fe9b89f7a84099245525b5e7ce408b70020a0e))
+* **封装class:** 封装class 外部直接调用class ([a9a09e0](https://github.com/hblvsjtu/TsPExpress/commit/a9a09e0d5db07a8cf18810805a0bb768483edb59))
+* **add use method:** add use method instead of interceptorManage.use ([fa7d9eb](https://github.com/hblvsjtu/TsPExpress/commit/fa7d9eb2f52138b786e45cf669c256d3bd63d46d))
+* **init:** init project ([7818ffc](https://github.com/hblvsjtu/TsPExpress/commit/7818ffc6bba9a0e8df887366a33977c71e4f5bac))
+* **parse query and body:** parse query and body but not formdata type ([96c3757](https://github.com/hblvsjtu/TsPExpress/commit/96c3757bdbf018dc5701472f92a20215d5d98190))
+* **RouterInterceptor:** RouterInterceptor with parameters ([f025321](https://github.com/hblvsjtu/TsPExpress/commit/f025321d4865c71adfd272e9db7fd3d7e1c98c85))
+* **staticPath:** staticPath for tspexpress ([2d933c8](https://github.com/hblvsjtu/TsPExpress/commit/2d933c88cc30de9709f75112790955c6bc54015f))
+
+
+
+## 0.0.6 (2020-06-14)
+
+
+### Bug Fixes
+
+* **delete interface FileData:** delete interface FileData ([300a77c](https://github.com/hblvsjtu/TsPExpress/commit/300a77c0a1a876470b920b7ca0c0def2f06d6d84))
+* **tsconfig:** tsconfig "include" delete test file dir ([2bda43d](https://github.com/hblvsjtu/TsPExpress/commit/2bda43ddf9b3c44198a0b7eedaf1af319b4bdbc6))
+* **type file name:** type file name change ([0836e86](https://github.com/hblvsjtu/TsPExpress/commit/0836e86e14103d8db63bef04fd68816769c00228))
+
+
+### Features
+
+* *** router:** * router: such as /* ([c6fe9b8](https://github.com/hblvsjtu/TsPExpress/commit/c6fe9b89f7a84099245525b5e7ce408b70020a0e))
+* **封装class:** 封装class 外部直接调用class ([a9a09e0](https://github.com/hblvsjtu/TsPExpress/commit/a9a09e0d5db07a8cf18810805a0bb768483edb59))
+* **add use method:** add use method instead of interceptorManage.use ([fa7d9eb](https://github.com/hblvsjtu/TsPExpress/commit/fa7d9eb2f52138b786e45cf669c256d3bd63d46d))
+* **init:** init project ([7818ffc](https://github.com/hblvsjtu/TsPExpress/commit/7818ffc6bba9a0e8df887366a33977c71e4f5bac))
+* **parse query and body:** parse query and body but not formdata type ([96c3757](https://github.com/hblvsjtu/TsPExpress/commit/96c3757bdbf018dc5701472f92a20215d5d98190))
+* **RouterInterceptor:** RouterInterceptor with parameters ([f025321](https://github.com/hblvsjtu/TsPExpress/commit/f025321d4865c71adfd272e9db7fd3d7e1c98c85))
+* **staticPath:** staticPath for tspexpress ([2d933c8](https://github.com/hblvsjtu/TsPExpress/commit/2d933c88cc30de9709f75112790955c6bc54015f))
+
+
+
+## 0.0.5 (2020-06-14)
+
+
+### Bug Fixes
+
+* **delete interface FileData:** delete interface FileData ([1218df8](https://github.com/hblvsjtu/TsPExpress/commit/1218df80c6ad86e2e062076f5db62bd70fd7cb14))
+* **tsconfig:** tsconfig "include" delete test file dir ([2bda43d](https://github.com/hblvsjtu/TsPExpress/commit/2bda43ddf9b3c44198a0b7eedaf1af319b4bdbc6))
+* **type file name:** type file name change ([0836e86](https://github.com/hblvsjtu/TsPExpress/commit/0836e86e14103d8db63bef04fd68816769c00228))
+
+
+### Features
+
+* *** router:** * router: such as /* ([c6fe9b8](https://github.com/hblvsjtu/TsPExpress/commit/c6fe9b89f7a84099245525b5e7ce408b70020a0e))
+* **封装class:** 封装class 外部直接调用class ([a9a09e0](https://github.com/hblvsjtu/TsPExpress/commit/a9a09e0d5db07a8cf18810805a0bb768483edb59))
+* **add use method:** add use method instead of interceptorManage.use ([fa7d9eb](https://github.com/hblvsjtu/TsPExpress/commit/fa7d9eb2f52138b786e45cf669c256d3bd63d46d))
+* **init:** init project ([7818ffc](https://github.com/hblvsjtu/TsPExpress/commit/7818ffc6bba9a0e8df887366a33977c71e4f5bac))
+* **parse query and body:** parse query and body but not formdata type ([96c3757](https://github.com/hblvsjtu/TsPExpress/commit/96c3757bdbf018dc5701472f92a20215d5d98190))
+* **RouterInterceptor:** RouterInterceptor with parameters ([f025321](https://github.com/hblvsjtu/TsPExpress/commit/f025321d4865c71adfd272e9db7fd3d7e1c98c85))
+* **staticPath:** staticPath for tspexpress ([2d933c8](https://github.com/hblvsjtu/TsPExpress/commit/2d933c88cc30de9709f75112790955c6bc54015f))
+
+
+
 ## 0.0.4 (2020-06-14)
 
 
