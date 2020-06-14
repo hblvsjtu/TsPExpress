@@ -26,6 +26,10 @@ interface FileData {
     message: string;
 }
 
+interface MyHeaders {
+    [name: string]: any;
+}
+
 interface Req {
     _readableState?: any;
     readable?: any;
@@ -44,7 +48,6 @@ interface Req {
     rawHeaders?: any;
     trailers?: any;
     rawTrailers?: any;
-    aborted?: any;
     upgrade?: any;
     url?: any;
     method?: any;
@@ -54,7 +57,27 @@ interface Req {
     _consuming?: any;
     _dumped?: any;
     routeQuery?: any;
+    abort?: () => any;
+    aborted?: boolean;
+    end?: (chunk: string | Buffer, encoding?: string, callback?: Function) => any;
+    destroy?: (error?: Error) => Req;
+    destroyed?: boolean;
+    finished?: boolean;
+    getHeader?: (name: string) => any;
+    maxHeadersCount?: number;
+    path?: string;
+    removeHeader?: (name: string) => any;
+    reusedSocket?: boolean;
+    setHeader?: (name: string, value?: any) => any;
+    setNoDelay?: (noDelay: boolean) => any;
+    setSocketKeepAlive?: (enable: boolean, initialDelay?: boolean) => any;
+    setTimeout?: (timeout: number, callback?: Function) => any;
+    writableEnded?: boolean;
+    writableFinished?: boolean;
+    write?: (chunk: string | Buffer, encoding?: string, callback?: Function) => any;
     [other: string]: any;
+    query?: object;
+    body?: any;
 }
 
 interface Res {
@@ -70,14 +93,12 @@ interface Res {
     chunkedEncoding?: any;
     shouldKeepAlive?: any;
     useChunkedEncodingByDefault?: any;
-    sendDate?: any;
     _removedConnection?: any;
     _removedContLen?: any;
     _removedTE?: any;
     _contentLength?: any;
     _hasBody?: any;
     _trailer?: any;
-    finished?: any;
     _headerSent?: any;
     socket?: any;
     connection?: any;
@@ -85,7 +106,33 @@ interface Res {
     _onPendingData?: any;
     _sent100?: any;
     _expect_continue?: any;
+    addTrailers: (Headers: boolean) => any;
+    end: (chunk: string | Buffer, encoding?: string, callback?: Function) => any;
+    abort: () => any;
+    aborted?: boolean;
+    destroy: (error?: Error) => Req;
+    destroyed?: boolean;
+    finished?: boolean;
+    getHeader: (name: string) => any;
+    hasHeader: (name: string) => boolean;
+    removeHeader: (name: string) => any;
+    getHeaderNames: () => Array<string>;
+    getHeaders: () => Array<Object>;
+    sendDate?: boolean;
+    setHeader: (name: string, value?: any) => any;
+    setTimeout: (timeout: number, callback?: Function) => any;
+    statusCode?: number;
+    statusMessage?: string;
+    write: (chunk: string | Buffer, encoding?: string, callback?: Function) => any;
+    writeHead: (statusCode: number, headers?: MyHeaders) => any;
     [other: string]: any;
+}
+
+interface MyContentType {
+    x: string;
+    row: string;
+    formData: string;
+    json: string;
 }
 
 interface Next {
@@ -107,10 +154,15 @@ interface InterceptManager<T> {
     eject: (index: number) => void;
 }
 
+type StaticPathResolve = (absolutePath: string, options?: StaticPathOptions) => ResolveFn<Next>;
+type Executor = (next: Next) => Next | Promise<Next>;
+type GetExecutor = (interceptorList: Array<Interceptor<any>>) => Executor;
+
 interface PExpress {
+    httpServer: any;
     interceptorList: Array<Interceptor<any>>;
     interceptManager: InterceptManager<any>;
-    execute: (next: Next) => Next | Promise<Next>;
+    execute: Executor;
     get: (url: string, resolve: ResolveFn<Next>, reject?: RejectFn) => PExpress;
     post: (url: string, resolve: ResolveFn<Next>, reject?: RejectFn) => PExpress;
     put: (url: string, resolve: ResolveFn<Next>, reject?: RejectFn) => PExpress;

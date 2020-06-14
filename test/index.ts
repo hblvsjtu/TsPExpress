@@ -63,14 +63,23 @@ router.interceptManager.use({
 router.get('/get/:name', (next: Next) => {
     const {req, res} = next;
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('path is get/path, and routerQuery = ' + JSON.stringify(req.routeQuery));
+    res.end(
+        'path is get/path, and routerQuery = ' +
+            JSON.stringify(req.routeQuery) +
+            JSON.stringify(req.query)
+    );
     return next;
 });
 
 router.post('/post/:path', (next: Next) => {
     const {req, res} = next;
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('path is /put/path, and routerQuery = ' + JSON.stringify(req.routeQuery));
+    res.end(
+        'path is /put/path, and routerQuery = ' +
+            JSON.stringify(req.routeQuery) +
+            JSON.stringify(req.query) +
+            JSON.stringify(req.body)
+    );
     return next;
 });
 

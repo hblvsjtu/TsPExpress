@@ -1,6 +1,6 @@
 {
     "name": "tspexpress",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "ts Promise API Express",
     "keywords": [
         "ts",
@@ -30,8 +30,8 @@
         "server": "node ./test/dist/test.es5.js",
         "build-test": "rollup --config rollup.example.ts",
         "build-server": "npm run build-test && npm run server",
-        "build-whole": "npm run build && npm run build-test && npm run server",
-        "start": "nodemon",
+        "build-whole": "npm run build && npm run build-test",
+        "start": "nodemon ./test/dist/test.es5.js",
         "pretty": "pretty-quick",
         "genlog": "conventional-changelog -p angular -i CHANGELOG.md -s",
         "precommit": "lint-staged",
