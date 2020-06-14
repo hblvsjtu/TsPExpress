@@ -6,6 +6,9 @@ const commonMethod = (
 ): PExpress => {
     const originResolve = routeInterceptor.resolve;
     routeInterceptor.resolve = (next: Next): Next | Promise<Next> => {
+        if (url === '/*') {
+            return originResolve(next);
+        }
         const {req, res} = next;
         const noQueryUrl = req.url.replace(/\?.+$/, '');
         const [preUrl, routeQueryKey] = url.split(':');

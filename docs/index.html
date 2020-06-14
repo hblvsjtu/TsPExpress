@@ -964,183 +964,51 @@ img { max-width: 100%; }
 		<div class="tsd-panel tsd-typography">
 			<h1 id="tspexpress">TsPExpress</h1>
 			<p>使用 Typescript 和 Promise API 重构 Express</p>
+			<h2 id="-">安装</h2>
+			<pre><code class="language-sh">npm install tspexpress</code></pre>
 			<h2 id="-">使用方法 开箱即用</h2>
-			<pre><code class="language-js"><span class="hljs-keyword">import</span> pexpress <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/index'</span>;
-<span class="hljs-keyword">const</span> router: PExpress = pexpress.create();
-router.interceptManager.use({
+			<pre><code class="language-js"><span class="hljs-comment">/// &lt;reference path="../src/types/golbal.d.ts" /&gt;</span>
+
+<span class="hljs-keyword">import</span> pexpress <span class="hljs-keyword">from</span> <span class="hljs-string">'tspexpress'</span>;
+
+<span class="hljs-keyword">const</span> router: PExpress = pexpress.create(); <span class="hljs-comment">// 创建实例</span>
+
+router.use(<span class="hljs-function">(<span class="hljs-params">next: Next</span>) =&gt;</span> {
     <span class="hljs-comment">// logger拦截器</span>
-    <span class="hljs-attr">resolve</span>: <span class="hljs-function">(<span class="hljs-params">next: Next</span>) =&gt;</span> {
-        <span class="hljs-keyword">const</span> {req, res} = next;
-        <span class="hljs-built_in">console</span>.log(
-            <span class="hljs-string">`\r\n\r\n==================   <span class="hljs-subst">${<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().toISOString()}</span>   ==================\r\n`</span>
-        );
-        <span class="hljs-keyword">return</span> next;
-    }
+    <span class="hljs-keyword">const</span> {req, res} = next;
+    <span class="hljs-built_in">console</span>.log(
+        <span class="hljs-string">`\r\n\r\n==================   <span class="hljs-subst">${<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().toISOString()}</span>   ==================\r\n`</span>
+    );
+    <span class="hljs-keyword">return</span> next;
 });
 
 router.setStaticPath(BASE_DIR, {<span class="hljs-attr">defaultFile</span>: <span class="hljs-string">'index.html'</span>}); <span class="hljs-comment">// 设置静态资源目录</span>
 
-router.interceptManager.use({
-    <span class="hljs-comment">// 拦截器</span>
-    <span class="hljs-attr">resolve</span>: <span class="hljs-function">(<span class="hljs-params">next: Next</span>) =&gt;</span> {
-        <span class="hljs-keyword">const</span> {req, res} = next;
-        <span class="hljs-keyword">const</span> {url, method, headers, accepts} = req;
-        <span class="hljs-keyword">const</span> [relativePath, queryObject] = url.split(<span class="hljs-string">'?'</span>);
-        <span class="hljs-keyword">const</span> query = queryString.parse(queryObject);
-        <span class="hljs-built_in">console</span>.log({
-            url,
-            query,
-            method,
-            headers,
-            accepts
-        });
-        <span class="hljs-keyword">return</span> next;
-    }
-});
-
 router.get(<span class="hljs-string">'/get/:name'</span>, (next: Next) =&gt; {
-    <span class="hljs-comment">// 路由带参数</span>
     <span class="hljs-keyword">const</span> {req, res} = next;
     res.writeHead(<span class="hljs-number">200</span>, {<span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'text/plain'</span>});
-    res.end(<span class="hljs-string">'path is get/path, and routerQuery = '</span> + <span class="hljs-built_in">JSON</span>.stringify(req.routeQuery));
+    res.end(
+        <span class="hljs-string">'path is get/path, and routerQuery = '</span> +
+            <span class="hljs-built_in">JSON</span>.stringify(req.routeQuery) +
+            <span class="hljs-built_in">JSON</span>.stringify(req.query)
+    );
     <span class="hljs-keyword">return</span> next;
 });
 
 router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
-    <span class="hljs-comment">// 路由带参数</span>
     <span class="hljs-keyword">const</span> {req, res} = next;
     res.writeHead(<span class="hljs-number">200</span>, {<span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'text/plain'</span>});
-    res.end(<span class="hljs-string">'path is /put/path, and routerQuery = '</span> + <span class="hljs-built_in">JSON</span>.stringify(req.routeQuery));
+    res.end(
+        <span class="hljs-string">'path is /put/path, and routerQuery = '</span> +
+            <span class="hljs-built_in">JSON</span>.stringify(req.routeQuery) +
+            <span class="hljs-built_in">JSON</span>.stringify(req.query) +
+            <span class="hljs-built_in">JSON</span>.stringify(req.body)
+    );
     <span class="hljs-keyword">return</span> next;
-});</code></pre>
-			<h2 id="api">API</h2>
-			<pre><code class="language-ts"><span class="hljs-keyword">type</span> Method =
-    | <span class="hljs-string">'get'</span>
-    | <span class="hljs-string">'GET'</span>
-    | <span class="hljs-string">'delete'</span>
-    | <span class="hljs-string">'DELETE'</span>
-    | <span class="hljs-string">'head'</span>
-    | <span class="hljs-string">'HEAD'</span>
-    | <span class="hljs-string">'options'</span>
-    | <span class="hljs-string">'OPTIONS'</span>
-    | <span class="hljs-string">'post'</span>
-    | <span class="hljs-string">'POST'</span>
-    | <span class="hljs-string">'put'</span>
-    | <span class="hljs-string">'PUT'</span>
-    | <span class="hljs-string">'patch'</span>
-    | <span class="hljs-string">'PATCH'</span>;
+});
 
-<span class="hljs-keyword">interface</span> StaticFilesOptions {
-    res: <span class="hljs-built_in">any</span>;
-    path: <span class="hljs-built_in">string</span>;
-    contentType?: <span class="hljs-built_in">string</span>;
-    responseCode?: <span class="hljs-built_in">number</span>;
-}
-
-<span class="hljs-keyword">interface</span> FileData {
-    next: <span class="hljs-built_in">string</span>;
-    message: <span class="hljs-built_in">string</span>;
-}
-
-<span class="hljs-keyword">interface</span> Req {
-    _readableState?: <span class="hljs-built_in">any</span>;
-    readable?: <span class="hljs-built_in">any</span>;
-    _events?: <span class="hljs-built_in">any</span>;
-    _eventsCount?: <span class="hljs-built_in">any</span>;
-    _maxListeners?: <span class="hljs-built_in">any</span>;
-    accepts?: <span class="hljs-built_in">any</span>;
-    cookies?: <span class="hljs-built_in">any</span>;
-    socket?: <span class="hljs-built_in">any</span>;
-    connection?: <span class="hljs-built_in">any</span>;
-    httpVersionMajor?: <span class="hljs-built_in">any</span>;
-    httpVersionMinor?: <span class="hljs-built_in">any</span>;
-    httpVersion?: <span class="hljs-built_in">any</span>;
-    complete?: <span class="hljs-built_in">any</span>;
-    headers?: <span class="hljs-built_in">any</span>;
-    rawHeaders?: <span class="hljs-built_in">any</span>;
-    trailers?: <span class="hljs-built_in">any</span>;
-    rawTrailers?: <span class="hljs-built_in">any</span>;
-    aborted?: <span class="hljs-built_in">any</span>;
-    upgrade?: <span class="hljs-built_in">any</span>;
-    url?: <span class="hljs-built_in">any</span>;
-    method?: <span class="hljs-built_in">any</span>;
-    statusCode?: <span class="hljs-built_in">any</span>;
-    statusMessage?: <span class="hljs-built_in">any</span>;
-    client?: <span class="hljs-built_in">any</span>;
-    _consuming?: <span class="hljs-built_in">any</span>;
-    _dumped?: <span class="hljs-built_in">any</span>;
-    routeQuery?: <span class="hljs-built_in">any</span>;
-    [other: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">any</span>;
-}
-
-<span class="hljs-keyword">interface</span> Res {
-    _events?: <span class="hljs-built_in">any</span>;
-    _eventsCount?: <span class="hljs-built_in">any</span>;
-    _maxListeners?: <span class="hljs-built_in">any</span>;
-    output?: <span class="hljs-built_in">any</span>;
-    outputEncodings?: <span class="hljs-built_in">any</span>;
-    outputCallbacks?: <span class="hljs-built_in">any</span>;
-    outputSize?: <span class="hljs-built_in">any</span>;
-    writable?: <span class="hljs-built_in">any</span>;
-    _last?: <span class="hljs-built_in">any</span>;
-    chunkedEncoding?: <span class="hljs-built_in">any</span>;
-    shouldKeepAlive?: <span class="hljs-built_in">any</span>;
-    useChunkedEncodingByDefault?: <span class="hljs-built_in">any</span>;
-    sendDate?: <span class="hljs-built_in">any</span>;
-    _removedConnection?: <span class="hljs-built_in">any</span>;
-    _removedContLen?: <span class="hljs-built_in">any</span>;
-    _removedTE?: <span class="hljs-built_in">any</span>;
-    _contentLength?: <span class="hljs-built_in">any</span>;
-    _hasBody?: <span class="hljs-built_in">any</span>;
-    _trailer?: <span class="hljs-built_in">any</span>;
-    finished?: <span class="hljs-built_in">any</span>;
-    _headerSent?: <span class="hljs-built_in">any</span>;
-    socket?: <span class="hljs-built_in">any</span>;
-    connection?: <span class="hljs-built_in">any</span>;
-    _header?: <span class="hljs-built_in">any</span>;
-    _onPendingData?: <span class="hljs-built_in">any</span>;
-    _sent100?: <span class="hljs-built_in">any</span>;
-    _expect_continue?: <span class="hljs-built_in">any</span>;
-    [other: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">any</span>;
-}
-
-<span class="hljs-keyword">interface</span> Next {
-    req: Req;
-    res: Res;
-}
-
-<span class="hljs-keyword">type</span> ResolveFn&lt;T&gt; = <span class="hljs-function">(<span class="hljs-params">data: T</span>) =&gt;</span> T | <span class="hljs-built_in">Promise</span>&lt;T&gt;;
-
-<span class="hljs-keyword">type</span> RejectFn = <span class="hljs-function">(<span class="hljs-params">data: <span class="hljs-built_in">Error</span> | <span class="hljs-literal">undefined</span></span>) =&gt;</span> <span class="hljs-built_in">any</span>;
-
-<span class="hljs-keyword">interface</span> Interceptor&lt;T&gt; {
-    resolve: ResolveFn&lt;T&gt;;
-    reject?: RejectFn;
-}
-
-<span class="hljs-keyword">interface</span> InterceptManager&lt;T&gt; {
-    use: <span class="hljs-function">(<span class="hljs-params">interceptor: Interceptor&lt;T&gt;</span>) =&gt;</span> <span class="hljs-built_in">number</span>;
-    eject: <span class="hljs-function">(<span class="hljs-params">index: <span class="hljs-built_in">number</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>;
-}
-
-<span class="hljs-keyword">interface</span> PExpress {
-    interceptorList: <span class="hljs-built_in">Array</span>&lt;Interceptor&lt;<span class="hljs-built_in">any</span>&gt;&gt;;
-    interceptManager: InterceptManager&lt;<span class="hljs-built_in">any</span>&gt;;
-    execute: <span class="hljs-function">(<span class="hljs-params">next: Next</span>) =&gt;</span> Next | <span class="hljs-built_in">Promise</span>&lt;Next&gt;;
-    <span class="hljs-keyword">get</span>: <span class="hljs-function">(<span class="hljs-params">url: <span class="hljs-built_in">string</span>, resolve: ResolveFn&lt;Next&gt;, reject?: RejectFn</span>) =&gt;</span> PExpress;
-    post: <span class="hljs-function">(<span class="hljs-params">url: <span class="hljs-built_in">string</span>, resolve: ResolveFn&lt;Next&gt;, reject?: RejectFn</span>) =&gt;</span> PExpress;
-    put: <span class="hljs-function">(<span class="hljs-params">url: <span class="hljs-built_in">string</span>, resolve: ResolveFn&lt;Next&gt;, reject?: RejectFn</span>) =&gt;</span> PExpress;
-    head: <span class="hljs-function">(<span class="hljs-params">url: <span class="hljs-built_in">string</span>, resolve: ResolveFn&lt;Next&gt;, reject?: RejectFn</span>) =&gt;</span> PExpress;
-    options: <span class="hljs-function">(<span class="hljs-params">url: <span class="hljs-built_in">string</span>, resolve: ResolveFn&lt;Next&gt;, reject?: RejectFn</span>) =&gt;</span> PExpress;
-    <span class="hljs-keyword">delete</span>: <span class="hljs-function">(<span class="hljs-params">url: <span class="hljs-built_in">string</span>, resolve: ResolveFn&lt;Next&gt;, reject?: RejectFn</span>) =&gt;</span> PExpress;
-    setStaticPath: <span class="hljs-function">(<span class="hljs-params">absolutePath: <span class="hljs-built_in">string</span>, options?: StaticPathOptions</span>) =&gt;</span> <span class="hljs-built_in">boolean</span>;
-    create: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> PExpress;
-    listen: <span class="hljs-function">(<span class="hljs-params">port: <span class="hljs-built_in">number</span>, callback?: (<span class="hljs-params"></span>) =&gt; <span class="hljs-built_in">any</span></span>) =&gt;</span> <span class="hljs-built_in">any</span>;
-}
-
-<span class="hljs-keyword">interface</span> StaticPathOptions {
-    defaultFile?: <span class="hljs-built_in">string</span>;
-}</code></pre>
+router.listen(<span class="hljs-number">3000</span>, () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'server start!'</span>));
+</code></pre>
 		</div>
 		<div style="position:relative;"><a name="typedoc-main-index" class="tsd-anchor"></a></div>
 		<section class="tsd-panel-group tsd-index-group">
@@ -1194,7 +1062,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 				<div class="tsd-signature tsd-kind-icon">fs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;fs&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/utils/staticPath.ts#L1">utils/staticPath.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/utils/staticPath.ts#L1">utils/staticPath.ts:1</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1204,7 +1072,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 				<div class="tsd-signature tsd-kind-icon">http<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;http&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/core/PExpress.ts#L5">core/PExpress.ts:5</a></li>
+						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/core/PExpress.ts#L5">core/PExpress.ts:5</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1214,7 +1082,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 				<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;path&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/core/staticPath.ts#L2">core/staticPath.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/core/staticPath.ts#L2">core/staticPath.ts:2</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1224,7 +1092,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 				<div class="tsd-signature tsd-kind-icon">pexpress<span class="tsd-signature-symbol">:</span> <a href="classes/pexpress.html" class="tsd-signature-type">PExpress</a><span class="tsd-signature-symbol"> =&nbsp;new PExpress()</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/index.ts#L3">index.ts:3</a></li>
+						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/index.ts#L3">index.ts:3</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1234,8 +1102,8 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 				<div class="tsd-signature tsd-kind-icon">query<wbr>String<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;require(&#x27;querystring&#x27;)</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/utils/query.ts#L1">utils/query.ts:1</a></li>
-						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/utils/body.ts#L2">utils/body.ts:2</a></li>
+						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/utils/query.ts#L1">utils/query.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/utils/body.ts#L2">utils/body.ts:2</a></li>
 					</ul>
 				</aside>
 			</section>
@@ -1252,7 +1120,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/utils/staticPath.ts#L3">utils/staticPath.ts:3</a></li>
+								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/utils/staticPath.ts#L3">utils/staticPath.ts:3</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1289,7 +1157,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/core/commonMethod.ts#L1">core/commonMethod.ts:1</a></li>
+								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/core/commonMethod.ts#L1">core/commonMethod.ts:1</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1321,7 +1189,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/core/executeChain.ts#L1">core/executeChain.ts:1</a></li>
+								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/core/executeChain.ts#L1">core/executeChain.ts:1</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1344,7 +1212,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/core/executeChain.ts#L5">core/executeChain.ts:5</a></li>
+								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/core/executeChain.ts#L5">core/executeChain.ts:5</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1367,7 +1235,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/core/staticPath.ts#L4">core/staticPath.ts:4</a></li>
+								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/core/staticPath.ts#L4">core/staticPath.ts:4</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1393,7 +1261,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/utils/body.ts#L4">utils/body.ts:4</a></li>
+								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/utils/body.ts#L4">utils/body.ts:4</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1416,7 +1284,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/utils/query.ts#L3">utils/query.ts:3</a></li>
+								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/utils/query.ts#L3">utils/query.ts:3</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1439,7 +1307,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/utils/index.ts#L8">utils/index.ts:8</a></li>
+								<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/utils/index.ts#L8">utils/index.ts:8</a></li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1464,7 +1332,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 				<div class="tsd-signature tsd-kind-icon">CONTENT_<wbr>TYPE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/utils/common.ts#L1">utils/common.ts:1</a></li>
+						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/utils/common.ts#L1">utils/common.ts:1</a></li>
 					</ul>
 				</aside>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
@@ -1473,7 +1341,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 					<div class="tsd-signature tsd-kind-icon">form<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;multipart/form-data&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/utils/common.ts#L4">utils/common.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/utils/common.ts#L4">utils/common.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1483,7 +1351,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 					<div class="tsd-signature tsd-kind-icon">json<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;application/json&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/utils/common.ts#L5">utils/common.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/utils/common.ts#L5">utils/common.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1493,7 +1361,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 					<div class="tsd-signature tsd-kind-icon">row<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;text/plain&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/utils/common.ts#L3">utils/common.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/utils/common.ts#L3">utils/common.ts:3</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1503,7 +1371,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 					<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;application/x-www-form-urlencoded&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/utils/common.ts#L2">utils/common.ts:2</a></li>
+							<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/utils/common.ts#L2">utils/common.ts:2</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1514,7 +1382,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 				<div class="tsd-signature tsd-kind-icon">pre<wbr>Interceptor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/core/preInterceptor.ts#L4">core/preInterceptor.ts:4</a></li>
+						<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/core/preInterceptor.ts#L4">core/preInterceptor.ts:4</a></li>
 					</ul>
 				</aside>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-object-literal">
@@ -1527,7 +1395,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/core/preInterceptor.ts#L11">core/preInterceptor.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/core/preInterceptor.ts#L11">core/preInterceptor.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1550,7 +1418,7 @@ router.post(<span class="hljs-string">'/post/:path'</span>, (next: Next) =&gt; {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/96c3757/src/core/preInterceptor.ts#L5">core/preInterceptor.ts:5</a></li>
+									<li>Defined in <a href="https://github.com/hblvsjtu/TsPExpress/blob/fa7d9eb/src/core/preInterceptor.ts#L5">core/preInterceptor.ts:5</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>

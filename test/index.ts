@@ -81,4 +81,15 @@ router.post('/post/:path', (next: Next) => {
     return next;
 });
 
+router.get('/*', (next: Next) => {
+    const {req, res} = next;
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end(
+        'path is not set, and routerQuery = ' +
+            JSON.stringify(req.routeQuery) +
+            JSON.stringify(req.query)
+    );
+    return next;
+});
+
 router.listen(3001, () => console.log('server start!'));
