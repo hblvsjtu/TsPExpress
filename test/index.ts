@@ -38,15 +38,13 @@ router.interceptManager.use({
     }
 });
 
-router.interceptManager.use({
-    resolve: (next: Next) => {
-        const {req, res} = next;
-        if (req.url === '/get/path') {
-            res.writeHead(200, {'Content-Type': 'text/plain'});
-            res.end('path is /get/path');
-        }
-        return next;
+router.use((next: Next) => {
+    const {req, res} = next;
+    if (req.url === '/*') {
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.end('path is *');
     }
+    return next;
 });
 
 router.interceptManager.use({

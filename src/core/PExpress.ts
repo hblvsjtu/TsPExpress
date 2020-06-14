@@ -23,6 +23,11 @@ export default class PExpress {
         this.interceptManager.use(preInterceptor);
         this.execute = getExecutor(this.interceptorList);
     }
+    use(resolve: ResolveFn<Next>): PExpress {
+        const interceptor: Interceptor<Next> = {resolve};
+        this.interceptorList.push(interceptor);
+        return this;
+    }
     get(url: string, resolve: ResolveFn<Next>, reject?: RejectFn): PExpress {
         return commonMethod(url, {resolve, reject}, this, 'GET');
     }

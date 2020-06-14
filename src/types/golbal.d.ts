@@ -163,6 +163,7 @@ interface PExpress {
     interceptorList: Array<Interceptor<any>>;
     interceptManager: InterceptManager<any>;
     execute: Executor;
+    use: (resolve: ResolveFn<Next>) => PExpress;
     get: (url: string, resolve: ResolveFn<Next>, reject?: RejectFn) => PExpress;
     post: (url: string, resolve: ResolveFn<Next>, reject?: RejectFn) => PExpress;
     put: (url: string, resolve: ResolveFn<Next>, reject?: RejectFn) => PExpress;
