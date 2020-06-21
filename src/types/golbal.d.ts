@@ -29,6 +29,10 @@ interface MyQuery {
     [other: string]: any;
 }
 
+interface MyCookie {
+    [other: string]: any;
+}
+
 interface Req {
     _readableState?: any;
     readable?: any;
@@ -76,6 +80,7 @@ interface Req {
     write?: (chunk: string | Buffer, encoding?: string, callback?: Function) => any;
     [other: string]: any;
     query?: MyQuery;
+    cookis?: MyCookie;
     body?: any;
 }
 

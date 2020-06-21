@@ -24,7 +24,7 @@ router.setStaticPath(BASE_DIR, {defaultFile: 'index.html'});
 router.interceptManager.use({
     resolve: (next: Next) => {
         const {req, res} = next;
-        const {url, method, headers, accepts} = req;
+        const {url, method, headers, accepts, cookie} = req;
         const [relativePath, queryObject] = url.split('?');
         const query = queryString.parse(queryObject);
         console.log({
@@ -32,7 +32,8 @@ router.interceptManager.use({
             query,
             method,
             headers,
-            accepts
+            accepts,
+            cookie
         });
         return next;
     }
