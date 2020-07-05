@@ -6,6 +6,7 @@ const buildStatisFiles = function({
     contentType = 'text/html',
     responseCode = 200
 }: StaticFilesOptions): void {
+    res.stop = true;
     fs.readFile(path, (err: Error, data: any): void => {
         if (err) {
             res.writeHead(500, {'Content-Type': 'text/plain'});

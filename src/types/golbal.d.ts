@@ -15,7 +15,7 @@ type Method =
     | 'PATCH';
 
 interface StaticFilesOptions {
-    res: any;
+    res: Res;
     path: string;
     contentType?: string;
     responseCode?: number;
@@ -129,6 +129,7 @@ interface Res {
     statusMessage?: string;
     write: (chunk: string | Buffer, encoding?: string, callback?: Function) => any;
     writeHead: (statusCode: number, headers?: MyHeaders) => any;
+    stop?: boolean;
     [other: string]: any;
 }
 

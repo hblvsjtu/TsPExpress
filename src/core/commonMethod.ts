@@ -6,6 +6,7 @@ const commonMethod = (
 ): PExpress => {
     const originResolve = routeInterceptor.resolve;
     routeInterceptor.resolve = (next: Next): Next | Promise<Next> => {
+        if (next.res.stop) return next;
         if (url === '/*') {
             return originResolve(next);
         }

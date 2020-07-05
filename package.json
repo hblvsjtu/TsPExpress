@@ -1,6 +1,6 @@
 {
     "name": "tspexpress",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "description": "ts Promise API Express",
     "keywords": [
         "ts",
